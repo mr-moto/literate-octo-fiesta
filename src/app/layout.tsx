@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { TRPCProvider } from './_trpc/Provider';
 import { MainContextProvider } from '@/contexts/MainContext';
 import { serverClient } from './_trpc/serverClient';
+import { ClerkProvider } from '@clerk/nextjs';
 
 import './globals.css';
 
@@ -26,15 +27,17 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <TRPCProvider>
-        <MainContextProvider initialUserData={initialUserData}>
-          <body className={cn(inter.className, 'min-h-screen flex flex-col')}>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </body>
-        </MainContextProvider>
-      </TRPCProvider>
+      <ClerkProvider>
+        <TRPCProvider>
+          <MainContextProvider initialUserData={initialUserData}>
+            <body className={cn(inter.className, 'min-h-screen flex flex-col')}>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </body>
+          </MainContextProvider>
+        </TRPCProvider>
+      </ClerkProvider>
     </html>
   );
 }

@@ -3,11 +3,14 @@ import { trpc } from '@/app/_trpc/client';
 import { useMainContext } from '@/contexts/MainContext';
 import { TUser } from '@/types/user';
 import { useEffect, useState } from 'react';
+import { useUser } from '@clerk/nextjs';
 
 export const UserCard = ({ user }: { user: TUser }) => {
+  const { isSignedIn } = useUser();
   const { users, setUsers } = useMainContext();
   const [editMode, setEditMode] = useState(false);
   const [userData, setUserData] = useState(user);
+  const [dirty, setDirty] = useState(false);
 
   const updateUser = trpc.user.update.useMutation({
     onSuccess: (data) => {
@@ -22,9 +25,26 @@ export const UserCard = ({ user }: { user: TUser }) => {
     },
   });
 
+  useEffect(() => {
+    if (!Object.is(userData, user)) {
+      setDirty(true);
+    } else {
+      setDirty(false);
+    }
+  }, [userData]);
+
   const handleCancelEdit = () => {
     setEditMode(false);
+    setDirty(false);
     setUserData(user);
+  };
+
+  const handleUpdateUser = () => {
+    if (dirty) {
+      updateUser.mutate(userData);
+    } else {
+      setEditMode(false);
+    }
   };
 
   return (
@@ -41,6 +61,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
                 setUserData((prev) => ({ ...prev, name: e.target.value }))
               }
               id="name"
+              disabled={updateUser.isLoading}
             />
           </div>
           <div>
@@ -53,6 +74,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
                 setUserData((prev) => ({ ...prev, email: e.target.value }))
               }
               id="email"
+              disabled={updateUser.isLoading}
             />
           </div>
           <div>
@@ -65,6 +87,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
                 setUserData((prev) => ({ ...prev, phone: e.target.value }))
               }
               id="phone"
+              disabled={updateUser.isLoading}
             />
           </div>
           <div>
@@ -77,6 +100,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
                 setUserData((prev) => ({ ...prev, website: e.target.value }))
               }
               id="website"
+              disabled={updateUser.isLoading}
             />
           </div>
           <div>
@@ -92,6 +116,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
                 }))
               }
               id="company"
+              disabled={updateUser.isLoading}
             />
           </div>
         </div>
@@ -107,7 +132,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
       {editMode ? (
         <>
           <button
-            onClick={() => updateUser.mutate(userData)}
+            onClick={handleUpdateUser}
             type="button"
             disabled={updateUser.isLoading}
           >
@@ -122,7 +147,11 @@ export const UserCard = ({ user }: { user: TUser }) => {
           </button>
         </>
       ) : (
-        <button onClick={() => setEditMode(true)} type="button">
+        <button
+          onClick={() => setEditMode(true)}
+          type="button"
+          disabled={!isSignedIn}
+        >
           Edit
         </button>
       )}

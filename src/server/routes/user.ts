@@ -1,5 +1,5 @@
 import { api } from '@/constants';
-import { router, publicProcedure } from '@/server/trpc';
+import { router, publicProcedure, privateProcedure } from '@/server/trpc';
 import { z } from 'zod';
 
 export const userSchema = z.object({
@@ -48,7 +48,7 @@ export const userRouter = router({
 
       return { ...data, id };
     }),
-  update: publicProcedure
+  update: privateProcedure
     .input(userSchema)
     .output(userSchema)
     .mutation(async ({ input }) => {
