@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import React, { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 
 type Props = {
   element?: keyof JSX.IntrinsicElements;
@@ -7,7 +7,7 @@ type Props = {
   innerClassName?: string;
 };
 
-const Container: React.FunctionComponent<
+export const Container: React.FunctionComponent<
   Props & HTMLAttributes<HTMLOrSVGElement>
 > = ({ element: Wrapper = 'div', children, innerClassName, ...rest }) => {
   return (
@@ -16,5 +16,3 @@ const Container: React.FunctionComponent<
     </Wrapper>
   );
 };
-
-export default Container;

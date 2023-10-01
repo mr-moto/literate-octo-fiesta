@@ -1,6 +1,6 @@
 'use client';
-import Container from '@/components/Container';
-import CreateUserButton from '@/components/CreateUserButton';
+import { Container } from '@/components/Container';
+import { CreateUserButton } from '@/components/CreateUserButton';
 import { useMainContext } from '@/contexts/MainContext';
 
 export default function Home() {

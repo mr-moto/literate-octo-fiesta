@@ -1,12 +1,14 @@
-import Header from '@/components/Header';
-import './globals.css';
 import type { Metadata } from 'next';
+
+import { Header } from '@/components/Header';
 import { Inter } from 'next/font/google';
-import Footer from '@/components/Footer';
+import { Footer } from '@/components/Footer';
 import { cn } from '@/lib/utils';
-import Provider from './_trpc/Provider';
+import { TRPCProvider } from './_trpc/Provider';
 import { MainContextProvider } from '@/contexts/MainContext';
 import { serverClient } from './_trpc/serverClient';
+
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,7 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Provider>
+      <TRPCProvider>
         <MainContextProvider initialUserData={initialUserData}>
           <body className={cn(inter.className, 'min-h-screen flex flex-col')}>
             <Header />
@@ -32,7 +34,7 @@ export default async function RootLayout({
             <Footer />
           </body>
         </MainContextProvider>
-      </Provider>
+      </TRPCProvider>
     </html>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 import { useMainContext } from '@/contexts/MainContext';
 import { TUser } from '@/types/user';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-export default function CreateUserButton() {
+export const CreateUserButton = () => {
   const { createUser } = useMainContext();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<TUser>({
@@ -96,4 +96,4 @@ export default function CreateUserButton() {
       )}
     </>
   );
-}
+};
