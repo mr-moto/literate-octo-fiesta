@@ -1,10 +1,11 @@
 'use client';
+import { trpc } from '@/app/_trpc/client';
 import { useMainContext } from '@/contexts/MainContext';
 import { TUser } from '@/types/user';
 import { useState } from 'react';
 
 export const CreateUserButton = () => {
-  const { createUser } = useMainContext();
+  const { setUsers } = useMainContext();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<TUser>({
     name: '',
@@ -13,6 +14,12 @@ export const CreateUserButton = () => {
     website: '',
     company: {
       name: '',
+    },
+  });
+  const createUser = trpc.user.create.useMutation({
+    onSuccess: (data) => {
+      setUsers((prev) => [...prev, data]);
+      setOpen(false);
     },
   });
 
@@ -86,7 +93,7 @@ export const CreateUserButton = () => {
               }
             />
           </div>
-          <button type="button" onClick={() => createUser(user)}>
+          <button type="button" onClick={() => createUser.mutate(user)}>
             create
           </button>
           <button type="button" onClick={() => setOpen(false)}>

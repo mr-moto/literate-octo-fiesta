@@ -1,31 +1,22 @@
 'use client';
-import { trpc } from '@/app/_trpc/client';
 import React, {
+  Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { TUser } from '@/types/user';
-import { RouterOutput } from '@/server';
-
-type TStatus = 'error' | 'idle' | 'loading' | 'success';
 
 type TMainContext = {
-  users: RouterOutput['users']['getAll'] | [];
-  createUser: (input: TUser) => void;
-  createUserStatus: TStatus;
-  updateUser: (input: TUser) => void;
-  updateUserStatus: TStatus;
+  users: TUser[];
+  setUsers: Dispatch<SetStateAction<TUser[]>>;
 };
 
 export const MainContext = createContext<TMainContext>({
   users: [],
-  createUser: () => {},
-  createUserStatus: 'loading',
-  updateUser: () => {},
-  updateUserStatus: 'loading',
+  setUsers: () => {},
 });
 
 export const MainContextProvider = ({
@@ -35,24 +26,13 @@ export const MainContextProvider = ({
   children: ReactNode;
   initialUserData: TUser[];
 }) => {
-  const userCreate = trpc.user.create.useMutation();
-  const userUpdate = trpc.user.update.useMutation();
-  const [users, setUsers] = useState(initialUserData);
-
-  useEffect(() => {
-    if (userCreate.isSuccess) {
-      setUsers((prev) => [...prev, userCreate.data]);
-    }
-  }, [userCreate.data, userCreate.isSuccess]);
+  const [users, setUsers] = useState<TUser[]>(initialUserData);
 
   return (
     <MainContext.Provider
       value={{
         users,
-        createUser: (input) => userCreate.mutate(input),
-        createUserStatus: userCreate.status,
-        updateUser: (input) => userUpdate.mutate(input),
-        updateUserStatus: userUpdate.status,
+        setUsers,
       }}
     >
       {children}
