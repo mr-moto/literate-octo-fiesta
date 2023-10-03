@@ -1,5 +1,6 @@
 import { router, publicProcedure } from '@/server/trpc';
-import { userSchema } from './user';
+import { userSchema } from '@/types/user';
+
 import { z } from 'zod';
 
 export const usersRouter = router({

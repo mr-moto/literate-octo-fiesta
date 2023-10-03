@@ -3,13 +3,15 @@ import type { Metadata } from 'next';
 import { Header } from '@/components/Header';
 import { Inter } from 'next/font/google';
 import { Footer } from '@/components/Footer';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { TRPCProvider } from './_trpc/Provider';
 import { MainContextProvider } from '@/contexts/MainContext';
 import { serverClient } from './_trpc/serverClient';
 import { ClerkProvider } from '@clerk/nextjs';
 
 import './globals.css';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,17 +25,26 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // We take advantage of data fetching on the server before render so that data is displayed right away without flickering. This data is passed into MainContext which will then store in state and allow for modification of the data.
   const initialUserData = await serverClient.users.getAll();
 
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: 'light' }} className="light">
       <ClerkProvider>
         <TRPCProvider>
           <MainContextProvider initialUserData={initialUserData}>
             <body className={cn(inter.className, 'min-h-screen flex flex-col')}>
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="light"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <Header />
+                <main className="flex-1 py-4">{children}</main>
+                <Footer />
+                <Toaster />
+              </ThemeProvider>
             </body>
           </MainContextProvider>
         </TRPCProvider>
