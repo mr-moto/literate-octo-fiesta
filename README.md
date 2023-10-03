@@ -1,5 +1,12 @@
 # BCGOV User Dashboard
 
+## Demo App
+https://bc-gov-is27-assessment.vercel.app/
+
+username: admin
+
+password: admin
+
 ## Getting started
 
 ### Installation
