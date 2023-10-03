@@ -4,7 +4,7 @@ import { userSchema } from '@/types/user';
 import { z } from 'zod';
 
 export const usersRouter = router({
-  getAll: publicProcedure.output(z.array(userSchema)).query(async () => {
+  getAll: publicProcedure.query(async () => {
     const res = await fetch('https://jsonplaceholder.typicode.com/users');
     const users = await res.json();
 

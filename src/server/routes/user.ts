@@ -24,7 +24,7 @@ export const userRouter = router({
     }),
   update: privateProcedure
     .input(userSchema)
-    .output(userSchema)
+    // .output(userSchema)
     .mutation(async ({ input }) => {
       // jsonplaceholder does not allow updating users whose IDs are greater than 10. We will pretend it will update by just returning the input as is if ID is greater than 10.
       if (input.id! <= 10) {

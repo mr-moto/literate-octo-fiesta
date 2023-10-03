@@ -2,9 +2,9 @@ import { z } from 'zod';
 
 export const userSchema = z.object({
   id: z.number().optional(),
-  name: z.string(),
+  name: z.string().nonempty(),
   username: z.string().optional(),
-  email: z.string(),
+  email: z.string().email().nonempty(),
   address: z
     .object({
       street: z.string(),
@@ -17,10 +17,10 @@ export const userSchema = z.object({
       }),
     })
     .optional(),
-  phone: z.string(),
-  website: z.string(),
+  phone: z.string().nonempty(),
+  website: z.string().nonempty(),
   company: z.object({
-    name: z.string(),
+    name: z.string().nonempty(),
     catchPhrase: z.string().optional(),
     bs: z.string().optional(),
   }),

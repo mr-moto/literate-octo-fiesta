@@ -72,6 +72,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
       form.reset();
     },
     onError: (err) => {
+      console.log(err);
       //handle errors here
     },
   });
@@ -82,10 +83,8 @@ export const UserCard = ({ user }: { user: TUser }) => {
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           {isSignedIn ? (
-            <DialogTrigger asChild>
-              <Button variant="outline" className="p-2 h-auto">
-                <Pencil className="h-4 w-4" color="hsl(var(--primary))" />
-              </Button>
+            <DialogTrigger>
+              <Pencil className="h-4 w-4" color="hsl(var(--primary))" />
             </DialogTrigger>
           ) : (
             <TooltipProvider delayDuration={0}>
@@ -113,7 +112,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit((values) =>
-                  updateUser.mutate(values)
+                  updateUser.mutate({ id: user.id, ...values })
                 )}
                 className="space-y-2"
               >

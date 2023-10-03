@@ -46,7 +46,6 @@ export const UtilBar = () => {
 
   const createUser = trpc.user.create.useMutation({
     onSuccess: (data) => {
-      console.log(data);
       setUsers((prev) => [...prev, data]);
       toast({
         title: 'User Created',
