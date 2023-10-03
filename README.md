@@ -18,7 +18,19 @@ yarn dev
 pnpm dev
 ```
 
-\*`pnpm` was used for local development
+#### If using docker:
+
+build:
+
+```bash
+docker build -t bcgov-user-dashbaord .
+```
+
+run:
+
+```bash
+docker run -p 3000:3000 --env-file .env.local bcgov-user-dashbaord
+```
 
 ### Clerk Setup
 
@@ -29,12 +41,24 @@ pnpm dev
   - Copy the API keys
 - Rename `.env.local.example` to `.env.local` and past the API keys here.
 
+## Deploying
+
+We are using github actions for our CI/CD pipeline. The workflow tests, builds and then deploys the code to vercel where it is hosted.
+
+A simple `git push` to the `main` branch will test and deploy to `production`.
+
+#### For docker
+
+there is an alternative aws deployment using docker as a github action. This has not been setup with keys but gives the general concept of how it would be deployed to aws with docker containerization
+
+pushing to `main-aws` will trigger the workflow
+
 ## Assumptions
 
 - The partner Api endpoint cannot modify and persist its data.
-  - GET requests will return an array of user objects
-  - POST requests will return the same user object it was given
-  - PUT requests will return the same user object is was given
+  - `GET` requests will return an array of user objects
+  - `POST` requests will return the same user object it was given
+  - `PUT` requests will return the same user object is was given
 - Because data does not persist on the partner api, we will store a local copy of the initial 10 users and pretend that it is the partner database that is being modified.
 - Requirements state that the data is shared with the partner. We will send POST and PUT requets as we would normally to pretend to modify the partner database. We will store the results locally to reflect changes.
 - Next.js is used as a modern fullstack framework as it provides both backend and frontend functionality suitable for this type of application.

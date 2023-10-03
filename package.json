@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "workflow": "act --secret-file my.secrets"
+    "workflow:test": "act -j test",
+    "workflow:deploy-production": "act -j deploy-production --secret-file my.secrets"
   },
   "dependencies": {
     "@clerk/backend": "^0.30.1",
