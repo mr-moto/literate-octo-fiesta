@@ -128,7 +128,11 @@ export const UserCard = ({ user }: { user: TUser }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="name" {...field} />
+                        <Input
+                          placeholder="name"
+                          {...field}
+                          autoComplete="name"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -141,7 +145,11 @@ export const UserCard = ({ user }: { user: TUser }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="email" {...field} />
+                        <Input
+                          placeholder="email"
+                          {...field}
+                          autoComplete="email"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -154,7 +162,11 @@ export const UserCard = ({ user }: { user: TUser }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="phone" {...field} />
+                        <Input
+                          placeholder="phone"
+                          {...field}
+                          autoComplete="tel"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

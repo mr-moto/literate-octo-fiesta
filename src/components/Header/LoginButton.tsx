@@ -99,7 +99,11 @@ export const LoginButton = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="username" {...field} />
+                    <Input
+                      placeholder="username"
+                      {...field}
+                      autoComplete="username"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

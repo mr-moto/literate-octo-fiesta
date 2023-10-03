@@ -78,6 +78,7 @@ export const UtilBar = () => {
             type="text"
             placeholder="Search by name"
             className="flex-1 pr-10"
+            name="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -119,7 +120,11 @@ export const UtilBar = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="name" {...field} />
+                      <Input
+                        placeholder="name"
+                        {...field}
+                        autoComplete="name"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,7 +137,11 @@ export const UtilBar = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="email" {...field} />
+                      <Input
+                        placeholder="email"
+                        {...field}
+                        autoComplete="email"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -145,7 +154,11 @@ export const UtilBar = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="phone" {...field} />
+                      <Input
+                        placeholder="phone"
+                        {...field}
+                        autoComplete="tel"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

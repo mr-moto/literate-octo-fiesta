@@ -160,3 +160,5 @@ pushing to `main-aws` will trigger the workflow
   - Would use node/express for back end
   - Would use vite/React for front end
   - Would use all tech listed in Features
+- Another workflow for pull requests for full CI/CD coverage
+- More testing - integration and e2e tests needed
