@@ -69,7 +69,10 @@ export const LoginButton = () => {
       }
     } catch (error) {
       if (instanceOfClerkError(error)) {
-        console.log(error.errors);
+        form.setError('root', {
+          message: error.errors[0].message,
+        });
+        return;
       }
       if (error instanceof Error) {
         form.setError('root', {
