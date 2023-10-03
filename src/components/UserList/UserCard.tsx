@@ -37,7 +37,7 @@ import { toast } from '@/components/ui/use-toast';
 import { useUser } from '@clerk/nextjs';
 
 export const UserCard = ({ user }: { user: TUser }) => {
-  const { users, setUsers } = useMainContext();
+  const { users, setUsers, fuse } = useMainContext();
   const { isSignedIn } = useUser();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -70,6 +70,11 @@ export const UserCard = ({ user }: { user: TUser }) => {
       setDialogOpen(false);
 
       form.reset();
+
+      fuse?.remove((user) => {
+        return user.id === data.id;
+      });
+      fuse?.add(data);
     },
     onError: (err) => {
       console.log(err);

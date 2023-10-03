@@ -31,7 +31,7 @@ import { toast } from './ui/use-toast';
 export const UtilBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { setUsers } = useMainContext();
+  const { setUsers, search, setSearchResults, fuse } = useMainContext();
 
   const form = useForm<TUser>({
     resolver: zodResolver(userSchema),
@@ -47,6 +47,7 @@ export const UtilBar = () => {
   const createUser = trpc.user.create.useMutation({
     onSuccess: (data) => {
       setUsers((prev) => [...prev, data]);
+      fuse?.add(data);
       toast({
         title: 'User Created',
         duration: 2000,
@@ -59,8 +60,9 @@ export const UtilBar = () => {
     },
   });
 
-  const handleClick = () => {
-    console.log('search clicked');
+  const handleClear = () => {
+    setSearchQuery('');
+    setSearchResults([]);
   };
 
   return (
@@ -79,11 +81,19 @@ export const UtilBar = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Button variant="ghost" className="absolute right-2 p-1 h-auto">
+          <Button
+            variant="ghost"
+            className="absolute right-2 p-1 h-auto"
+            onClick={handleClear}
+          >
             <X className="h-4 w-4" />
           </Button>
         </div>
-        <Button size="icon" disabled={!searchQuery} onClick={handleClick}>
+        <Button
+          size="icon"
+          disabled={!searchQuery}
+          onClick={() => search(searchQuery)}
+        >
           <Search className="h-4 w-4" />
         </Button>
       </div>
