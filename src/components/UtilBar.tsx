@@ -86,6 +86,8 @@ export const UtilBar = () => {
             variant="ghost"
             className="absolute right-2 p-1 h-auto"
             onClick={handleClear}
+            role="button"
+            aria-label="Close Icon"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -94,6 +96,8 @@ export const UtilBar = () => {
           size="icon"
           disabled={!searchQuery}
           onClick={() => search(searchQuery)}
+          role="button"
+          aria-label="Search Icon"
         >
           <Search className="h-4 w-4" />
         </Button>

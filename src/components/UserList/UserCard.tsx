@@ -88,14 +88,18 @@ export const UserCard = ({ user }: { user: TUser }) => {
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           {isSignedIn ? (
-            <DialogTrigger>
+            <DialogTrigger aria-label="Edit Icon">
               <Pencil className="h-4 w-4" color="hsl(var(--primary))" />
             </DialogTrigger>
           ) : (
             <TooltipProvider delayDuration={0}>
               <Tooltip>
                 <TooltipTrigger>
-                  <Pencil className="h-4 w-4" color="hsl(var(--primary))" />
+                  <Pencil
+                    className="h-4 w-4"
+                    color="hsl(var(--primary))"
+                    aria-label="Edit Icon"
+                  />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Login to edit</p>
