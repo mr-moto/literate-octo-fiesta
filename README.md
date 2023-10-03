@@ -121,3 +121,18 @@ pnpm dev
   - I can successfully login and edit contacts
 - **Actual Results**:
   - I can successfully login and edit contacts ✅
+
+## Things to consider
+
+- If we were to persist data
+  - Flexible on what type of database ( sql/no-sql )
+  - Use an ORM such as Prisma
+  - All calls to the db go through the ORM inside RPC calls ( using TRPC - to get end-to-end typesafety )
+  - Only save new user entries to the database as data from partern API does not persist.
+- Containerization ( docker/Kubernetes etc)
+  - not used in favor of using nextjs and deploying to vercel
+- A more traditional back/front end structure
+  - not used in favor of using nextjs
+  - Would use node/express for back end
+  - Would use vite/React for front end
+  - Would use all tech listed in Features
