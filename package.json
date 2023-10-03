@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "vitest",
+    "workflow": "act --secret-file my.secrets"
   },
   "dependencies": {
     "@clerk/backend": "^0.30.1",
